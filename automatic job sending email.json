@@ -5,7 +5,7 @@
       "parameters": {
         "documentId": {
           "__rl": true,
-          "value": "1F_rR7MBoyT4Rb0qZG4_FjOCRGijRZz4brpQ2oWjs9B0",
+          "value": "YOUR_GOOGLE_SHEET_ID",
           "mode": "list"
         },
         "sheetName": {
@@ -27,7 +27,7 @@
       "typeVersion": 1,
       "position": [32, 0],
       "id": "38d9a4d2-0214-44ab-b44d-9bab314d56a4",
-      "name": "When clicking ‘Execute workflow’"
+      "name": "When clicking 'Execute workflow'"
     },
     {
       "parameters": {
@@ -75,7 +75,7 @@
         "sendTo": "={{ $('Get row(s) in sheet').item.json.Email }}",
         "subject": "={{ $('Get row(s) in sheet').item.json.Position }}",
         "emailType": "text",
-        "message": "Hi,\nI hope this message finds you well. My name is James Kian Boringot, and I am a Data Analyst and Backend Developer with hands-on experience in data analysis, extracting valuable insights, and developing web-based systems.\n\nI would welcome the opportunity to discuss how my skills and experience could contribute to your team.\n\nBest regards,\nJames Kian Boringot",
+        "message": "Hi,\nI hope this message finds you well. My name is YOUR_NAME, and I am a YOUR_ROLE with hands-on experience in YOUR_SKILLS.\n\nI would welcome the opportunity to discuss how my skills and experience could contribute to your team.\n\nBest regards,\nYOUR_NAME",
         "options": {}
       },
       "type": "n8n-nodes-base.gmail",
@@ -89,7 +89,7 @@
         "operation": "appendOrUpdate",
         "documentId": {
           "__rl": true,
-          "value": "1F_rR7MBoyT4Rb0qZG4_FjOCRGijRZz4brpQ2oWjs9B0",
+          "value": "YOUR_GOOGLE_SHEET_ID",
           "mode": "list"
         },
         "sheetName": {
@@ -100,9 +100,9 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "Comleted": "✅"
+            "Completed": "✅"
           },
-          "matchingColumns": ["Comleted"]
+          "matchingColumns": ["Completed"]
         },
         "options": {}
       },
@@ -114,7 +114,7 @@
     }
   ],
   "connections": {
-    "When clicking ‘Execute workflow’": {
+    "When clicking 'Execute workflow'": {
       "main": [[{ "node": "Get row(s) in sheet", "type": "main", "index": 0 }]]
     },
     "Get row(s) in sheet": {
