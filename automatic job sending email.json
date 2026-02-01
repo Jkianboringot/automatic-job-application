@@ -1,0 +1,140 @@
+{
+  "name": "automatic job sending email",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1F_rR7MBoyT4Rb0qZG4_FjOCRGijRZz4brpQ2oWjs9B0",
+          "mode": "list"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [256, 0],
+      "id": "35ad8afe-ee7f-4a09-91b0-64f1ecb12c81",
+      "name": "Get row(s) in sheet"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [32, 0],
+      "id": "38d9a4d2-0214-44ab-b44d-9bab314d56a4",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "leftValue": "={{ $json.Email }}",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "leftValue": "={{ $json.Email }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [480, 0],
+      "id": "80c9720b-efa9-4eb2-b38a-82b17df4674d",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "fileSelector": "resume.pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [720, 0],
+      "id": "88d57e6f-7202-4ea5-8078-ecc6af2ed508",
+      "name": "data"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Get row(s) in sheet').item.json.Email }}",
+        "subject": "={{ $('Get row(s) in sheet').item.json.Position }}",
+        "emailType": "text",
+        "message": "Hi,\nI hope this message finds you well. My name is James Kian Boringot, and I am a Data Analyst and Backend Developer with hands-on experience in data analysis, extracting valuable insights, and developing web-based systems.\n\nI would welcome the opportunity to discuss how my skills and experience could contribute to your team.\n\nBest regards,\nJames Kian Boringot",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [1024, 16],
+      "id": "3634eed0-965f-4e5f-af38-eb1cac214505",
+      "name": "Send a message"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1F_rR7MBoyT4Rb0qZG4_FjOCRGijRZz4brpQ2oWjs9B0",
+          "mode": "list"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Comleted": "✅"
+          },
+          "matchingColumns": ["Comleted"]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [688, -192],
+      "id": "e2457c02-531a-491a-9202-194df9214ce1",
+      "name": "Append or update row in sheet"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [[{ "node": "Get row(s) in sheet", "type": "main", "index": 0 }]]
+    },
+    "Get row(s) in sheet": {
+      "main": [[{ "node": "Filter", "type": "main", "index": 0 }]]
+    },
+    "Filter": {
+      "main": [[
+        { "node": "data", "type": "main", "index": 0 },
+        { "node": "Append or update row in sheet", "type": "main", "index": 0 }
+      ]]
+    },
+    "data": {
+      "main": [[{ "node": "Send a message", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b9ddacc3-7d3a-4f3f-acdd-9e7fd7d6323a",
+  "id": "n_h3tmhTSzSfJ5pABwDe-",
+  "tags": []
+}
